@@ -4,12 +4,14 @@ import { client } from "./lib/appwrite";
 import { AppwriteException } from "appwrite";
 import AppwriteSvg from "../public/appwrite.svg";
 import ReactSvg from "../public/react.svg";
+import RestaurantDemo from "./components/RestaurantDemo";
 
 function App() {
   const [detailHeight, setDetailHeight] = useState(55);
   const [logs, setLogs] = useState([]);
   const [status, setStatus] = useState("idle");
   const [showLogs, setShowLogs] = useState(false);
+  const [activeTab, setActiveTab] = useState("ping"); // ping or restaurant
 
   const detailsRef = useRef(null);
 
@@ -151,17 +153,33 @@ function App() {
         >
           <span className="text-white">Send a ping</span>
         </button>
-      </section>
-
-      <div className="grid grid-rows-3 gap-7 lg:grid-cols-3 lg:grid-rows-none">
+      </section>      <div className="grid grid-rows-4 gap-7 lg:grid-cols-4 lg:grid-rows-none">
         <div className="flex h-full w-72 flex-col gap-2 rounded-md border border-[#EDEDF0] bg-white p-4">
           <h2 className="text-xl font-light text-[#2D2D31]">Edit your app</h2>
           <p>
             Edit{" "}
-            <code className="rounded-sm bg-[#EDEDF0] p-1">app/page.js</code> to
+            <code className="rounded-sm bg-[#EDEDF0] p-1">src/App.jsx</code> to
             get started with building your app.
           </p>
         </div>
+        
+        <a
+          href="?demo=restaurant"
+          rel="noopener noreferrer"
+        >
+          <div className="flex h-full w-72 flex-col gap-2 rounded-md border border-[#EDEDF0] bg-white p-4 hover:shadow-md transition-shadow">
+            <div className="flex flex-row items-center justify-between">
+              <h2 className="text-xl font-light text-[#2D2D31]">
+                🍤 Restaurant Demo
+              </h2>
+              <span className="icon-arrow-right text-[#D8D8DB]"></span>
+            </div>
+            <p>
+              Test Khmer Seafood Restaurant integration with Appwrite database and services.
+            </p>
+          </div>
+        </a>
+        
         <a
           href="https://cloud.appwrite.io"
           target="_blank"
@@ -264,7 +282,7 @@ function App() {
                 <tbody>
                   {logs.length > 0 ? (
                     logs.map((log) => (
-                      <tr>
+                      <tr key={log.date.toISOString() + log.path}>
                         <td className="py-2 pl-4 font-[Fira_Code]">
                           {log.date.toLocaleString("en-US", {
                             month: "short",
